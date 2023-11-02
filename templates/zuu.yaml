@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zuu-deployment
+  labels:
+    app: zuu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zuu
+  template:
+    metadata:
+      labels:
+        app: zuu
+    spec:
+      containers:
+      - name: zuu
+        image: bharath0812/nodepro:4.0
+        ports:
+        - containerPort: 9999
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: zuu-svc
+spec:
+  type: ClusterIP
+  selector:
+   app: zuu
+  ports:
+   - port: 8083
+     targetPort: 9999

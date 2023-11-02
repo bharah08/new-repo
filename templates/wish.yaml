@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wish-deployment
+  labels:
+    app: wish
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wish
+  template:
+    metadata:
+      labels:
+        app: wish
+    spec:
+      containers:
+      - name: wish
+        image: bharath0812/nodepro:7.0
+        ports:
+        - containerPort: 1003
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: wish-svc
+spec:
+  type: ClusterIP
+  selector:
+   app: wish
+  ports:
+   - port: 8086
+     targetPort: 1003

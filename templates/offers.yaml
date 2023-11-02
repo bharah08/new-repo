@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: offers-deployment
+  labels:
+    app: offers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: offers
+  template:
+    metadata:
+      labels:
+        app: offers
+    spec:
+      containers:
+      - name: offers
+        image: bharath0812/nodepro:2.0
+        ports:
+        - containerPort: 1001
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: offers-svc
+spec:
+  type: ClusterIP
+  selector:
+   app: offers
+  ports:
+   - port: 8081
+     targetPort: 1001
